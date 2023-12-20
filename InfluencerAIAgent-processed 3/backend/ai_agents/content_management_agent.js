@@ -8,8 +8,7 @@ class ContentManagementAgent {
     const calendar = [];
     const contentTypes = influencerProfile.contentTypes;
     const postingFrequency = influencerProfile.postingFrequency;
-
-    // Example: Spread content evenly across the next 30 days
+    // Spread content evenly across the next 30 days
     const today = new Date();
     for (let i = 0; i < 30; i++) {
       const date = new Date();
@@ -24,21 +23,27 @@ class ContentManagementAgent {
       });
     }
     // TODO: Incorporate special events from influencerProfile into the calendar
-
     return calendar;
   }
 
   suggestContentIdeas(influencerProfile, marketData) {
     // Implement content suggestion algorithm based on profile and market trends
     const suggestedIdeas = [];
-    // Example: Analyze marketData trends and profile for content gap identification
-    // TODO: Add algorithm steps to analyze and suggest content ideas
-    // - Analyze past content performance
-    // - Identify trending topics in the market
-    // - Match audience interests with upcoming trends
-    // - Prioritize ideas based on potential engagement
-    // Return a list of suggested content ideas, could be ranked by relevance
-    return suggestedIdeas;
+
+    // Analyze past content performance and identify what resonates with the audience
+    const topPerformingContents = analyzePastContentPerformance(influencerProfile);
+    // Identify trending topics in the marketData
+    const trendingTopics = identifyMarketTrends(marketData);
+    // Match audience interests with upcoming trends
+    const matchedIdeas = matchAudienceInterests(trendingTopics, influencerProfile);
+    // Prioritize ideas based on potential engagement
+    const prioritizedIdeas = prioritizeIdeas(matchedIdeas);
+
+    // Merge all the analyses to form a comprehensive list of suggestions
+    suggestedIdeas.push(...topPerformingContents, ...prioritizedIdeas);
+
+    // Return a list of suggested content ideas, ranked by relevance and potential impact
+    return suggestedIdeas.sort((a, b) => b.potentialImpact - a.potentialImpact);
   }
 }
 
