@@ -4,12 +4,29 @@ class ContentManagementAgent {
   }
 
   generateContentCalendar(influencerProfile) {
-    // TODO: Implement the content calendar generation algorithm
-    // Example steps could include:
-    // 1. Use influencerProfile to determine the content themes and frequency
-    // 2. Map out a calendar with dates and content types
-    // 3. Allow for special events or campaigns
-    // 4. Return a structured calendar of when and what content to post
+    // Implement the content calendar generation algorithm
+    const calendar = [];
+    const contentTypes = influencerProfile.contentTypes;
+    const postingFrequency = influencerProfile.postingFrequency;
+
+    // Example: Spread content evenly across the next 30 days
+    const today = new Date();
+    for (let i = 0; i < 30; i++) {
+      const date = new Date();
+      date.setDate(today.getDate() + i);
+      contentTypes.forEach((type) => {
+        if (i % postingFrequency[type] === 0) {
+          calendar.push({
+            date: date.toISOString().split('T')[0],
+            contentType: type
+          });
+        }
+      });
+    }
+    // Consider special dates or events for targeted content
+    // TODO: Incorporate special events from influencerProfile into the calendar
+
+    return calendar;
   }
 
   suggestContentIdeas(influencerProfile, marketData) {
